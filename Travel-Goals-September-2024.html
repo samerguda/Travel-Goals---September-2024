@@ -7,6 +7,7 @@
     <style>
         :root {
             --primary-color: #007bb6;
+            --whatsapp-color: #25D366;
             --bg-color: #f4f7f9;
             --card-bg: #ffffff;
             --text-color: #333333;
@@ -26,11 +27,11 @@
 
         .container {
             background-color: var(--card-bg);
-            padding: 25px 30px;
+            padding: 25px;
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
         }
 
         .header {
@@ -46,8 +47,8 @@
         }
 
         .clock-box {
-            font-size: 0.9em;
-            color: #666;
+            font-size: 0.88em;
+            color: #555;
             background: #eef6fa;
             padding: 8px 12px;
             border-radius: 6px;
@@ -64,53 +65,104 @@
         .data-item {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #f0f0f0;
-            font-size: 0.95em;
+            gap: 10px;
+        }
+
+        .data-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .data-item .label {
             font-weight: bold;
-            color: #555;
+            font-size: 0.85em;
+            color: #666;
         }
 
         .data-item .value {
-            color: #222;
+            color: #111;
+            font-size: 0.95em;
             direction: ltr;
-            text-align: left;
+            text-align: right;
+            word-break: break-all;
         }
 
-        .copy-btn {
-            width: 100%;
+        .btn-small {
+            background-color: #f0f4f8;
+            color: var(--primary-color);
+            border: 1px solid #cbdbe6;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn-small:hover {
             background-color: var(--primary-color);
             color: #fff;
-            border: none;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-main {
+            width: 100%;
             padding: 12px;
             border-radius: 8px;
             font-size: 1em;
             font-weight: bold;
+            border: none;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
             transition: background-color 0.2s, transform 0.1s;
         }
 
-        .copy-btn:hover {
+        .btn-copy-all {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-copy-all:hover {
             background-color: #005f8d;
         }
 
-        .copy-btn:active {
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+            color: white;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1eb956;
+        }
+
+        .btn-main:active {
             transform: scale(0.98);
         }
 
         .toast {
             visibility: hidden;
-            min-width: 200px;
+            min-width: 220px;
             background-color: #333;
             color: #fff;
             text-align: center;
             border-radius: 6px;
             padding: 10px;
             position: fixed;
-            z-index: 1;
+            z-index: 10;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
@@ -133,23 +185,74 @@
     </div>
 
     <ul class="data-list">
-        <li class="data-item"><span class="label">اسم صاحب الحساب:</span><span class="value">SAMER GUDA NASR ALSAADNI</span></li>
-        <li class="data-item"><span class="label">رقم الحساب:</span><span class="value">478262110001</span></li>
-        <li class="data-item"><span class="label">العملة:</span><span class="value">EUR</span></li>
-        <li class="data-item"><span class="label">NIB:</span><span class="value">018900047826211000144</span></li>
-        <li class="data-item"><span class="label">IBAN:</span><span class="value">PT50018900047826211000144</span></li>
-        <li class="data-item"><span class="label">رمز BIC / SWIFT:</span><span class="value">BAPAPTPLXXX</span></li>
-        <li class="data-item"><span class="label">اسم البنك:</span><span class="value">Banco Atlântico Europa, S.A.</span></li>
-        <li class="data-item"><span class="label">تاريخ الإصدار:</span><span class="value">Lisboa, 26 de setembro de 2026</span></li>
+        <li class="data-item">
+            <div class="data-info">
+                <span class="label">اسم صاحب الحساب</span>
+                <span class="value" id="val-holder">SAMER GUDA NASR ALSAADNI</span>
+            </div>
+            <button class="btn-small" onclick="copySingle('val-holder', 'اسم صاحب الحساب')">نسخ</button>
+        </li>
+        <li class="data-item">
+            <div class="data-info">
+                <span class="label">رقم الحساب</span>
+                <span class="value" id="val-account">478262110001</span>
+            </div>
+            <button class="btn-small" onclick="copySingle('val-account', 'رقم الحساب')">نسخ</button>
+        </li>
+        <li class="data-item">
+            <div class="data-info">
+                <span class="label">العملة</span>
+                <span class="value" id="val-currency">EUR</span>
+            </div>
+            <button class="btn-small" onclick="copySingle('val-currency', 'العملة')">نسخ</button>
+        </li>
+        <li class="data-item">
+            <div class="data-info">
+                <span class="label">NIB</span>
+                <span class="value" id="val-nib">018900047826211000144</span>
+            </div>
+            <button class="btn-small" onclick="copySingle('val-nib', 'NIB')">نسخ</button>
+        </li>
+        <li class="data-item">
+            <div class="data-info">
+                <span class="label">IBAN</span>
+                <span class="value" id="val-iban">PT50018900047826211000144</span>
+            </div>
+            <button class="btn-small" onclick="copySingle('val-iban', 'IBAN')">نسخ</button>
+        </li>
+        <li class="data-item">
+            <div class="data-info">
+                <span class="label">رمز BIC / SWIFT</span>
+                <span class="value" id="val-swift">BAPAPTPLXXX</span>
+            </div>
+            <button class="btn-small" onclick="copySingle('val-swift', 'رمز SWIFT')">نسخ</button>
+        </li>
+        <li class="data-item">
+            <div class="data-info">
+                <span class="label">اسم البنك</span>
+                <span class="value" id="val-bank">Banco Atlântico Europa, S.A.</span>
+            </div>
+            <button class="btn-small" onclick="copySingle('val-bank', 'اسم البنك')">نسخ</button>
+        </li>
+        <li class="data-item">
+            <div class="data-info">
+                <span class="label">تاريخ الإصدار</span>
+                <span class="value" id="val-date">Lisboa, 26 de setembro de 2026</span>
+            </div>
+            <button class="btn-small" onclick="copySingle('val-date', 'تاريخ الإصدار')">نسخ</button>
+        </li>
     </ul>
 
-    <button class="copy-btn" onclick="copyAllData()">نسخ جميع البيانات</button>
+    <div class="actions">
+        <button class="btn-main btn-copy-all" onclick="copyAllData()">نسخ جميع البيانات</button>
+        <a id="whatsappLink" href="#" target="_blank" class="btn-main btn-whatsapp">مشاركة عبر WhatsApp</a>
+    </div>
 </div>
 
-<div id="toast" class="toast">تم نسخ جميع البيانات بنجاح!</div>
+<div id="toast" class="toast">تم النسخ بنجاح!</div>
 
 <script>
-    // عداد الوقت والتاريخ المباشر
+    // 1. عداد الوقت والتاريخ المباشر
     function updateClock() {
         const now = new Date();
         const options = { 
@@ -166,31 +269,50 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // وظيفة نسخ جميع البيانات
-    function copyAllData() {
-        const textToCopy = `اسم صاحب الحساب: SAMER GUDA NASR ALSAADNI
-رقم الحساب: 478262110001
-العملة: EUR
-NIB: 018900047826211000144
-IBAN: PT50018900047826211000144
-رمز BIC / SWIFT: BAPAPTPLXXX
-اسم البنك: Banco Atlântico Europa, S.A.
-تاريخ الإصدار: Lisboa, 26 de setembro de 2026`;
+    // نص البيانات الكامل لاستخدامه في النسخ الشامل والواتساب
+    function getFormattedText() {
+        return `*تفاصيل الحساب المصرفي:*
 
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            showToast();
-        }).catch(err => {
-            console.error('فشل النسخ: ', err);
+• *اسم صاحب الحساب:* SAMER GUDA NASR ALSAADNI
+• *رقم الحساب:* 478262110001
+• *العملة:* EUR
+• *NIB:* 018900047826211000144
+• *IBAN:* PT50018900047826211000144
+• *رمز BIC / SWIFT:* BAPAPTPLXXX
+• *اسم البنك:* Banco Atlântico Europa, S.A.
+• *تاريخ الإصدار:* Lisboa, 26 de setembro de 2026`;
+    }
+
+    // 2. نسخ حقل واحد
+    function copySingle(elementId, labelName) {
+        const valueText = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(valueText).then(() => {
+            showToast(`تم نسخ ${labelName}`);
         });
     }
 
-    // إظهار إشعار النسخ
-    function showToast() {
+    // 3. نسخ كل البيانات
+    function copyAllData() {
+        navigator.clipboard.writeText(getFormattedText()).then(() => {
+            showToast('تم نسخ جميع البيانات بنجاح!');
+        });
+    }
+
+    // 4. إعداد رابط الواتساب
+    function setupWhatsApp() {
+        const encodedText = encodeURIComponent(getFormattedText());
+        document.getElementById('whatsappLink').href = `https://api.whatsapp.com/send?text=${encodedText}`;
+    }
+    setupWhatsApp();
+
+    // إظهار التنبيه (Toast)
+    function showToast(message) {
         const toast = document.getElementById("toast");
+        toast.innerText = message;
         toast.className = "toast show";
         setTimeout(() => { 
             toast.className = toast.className.replace("show", ""); 
-        }, 2500);
+        }, 2000);
     }
 </script>
 
