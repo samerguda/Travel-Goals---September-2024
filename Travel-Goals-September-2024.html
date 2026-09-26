@@ -1,73 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Goals - September 2024</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>تفاصيل الحساب المصرفي</title>
+    <style>
+        :root {
+            --primary-color: #007bb6;
+            --bg-color: #f4f7f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header h2 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+        }
+
+        .clock-box {
+            font-size: 0.9em;
+            color: #666;
+            background: #eef6fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .data-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95em;
+        }
+
+        .data-item .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .data-item .value {
+            color: #222;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .copy-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .copy-btn:hover {
+            background-color: #005f8d;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-    <div id="top-bar">
-        <span id="current-date-time"></span>
-        <button id="dark-mode-toggle">🌙</button>
+
+<div class="container">
+    <div class="header">
+        <h2>تفاصيل الحساب المصرفي</h2>
+        <div class="clock-box" id="liveClock">جاري تحميل الوقت...</div>
     </div>
 
-    <h1>اهداف سفرية ٢٠ سبتمبر - Travel Goals</h1>
+    <ul class="data-list">
+        <li class="data-item"><span class="label">اسم صاحب الحساب:</span><span class="value">SAMER GUDA NASR ALSAADNI</span></li>
+        <li class="data-item"><span class="label">رقم الحساب:</span><span class="value">478262110001</span></li>
+        <li class="data-item"><span class="label">العملة:</span><span class="value">EUR</span></li>
+        <li class="data-item"><span class="label">NIB:</span><span class="value">018900047826211000144</span></li>
+        <li class="data-item"><span class="label">IBAN:</span><span class="value">PT50018900047826211000144</span></li>
+        <li class="data-item"><span class="label">رمز BIC / SWIFT:</span><span class="value">BAPAPTPLXXX</span></li>
+        <li class="data-item"><span class="label">اسم البنك:</span><span class="value">Banco Atlântico Europa, S.A.</span></li>
+        <li class="data-item"><span class="label">تاريخ الإصدار:</span><span class="value">Lisboa, 26 de setembro de 2026</span></li>
+    </ul>
 
-    <div class="controls">
-        <button onclick="printPage()">🖨️ Print</button>
-        <button onclick="copyContent()">📋 Copy</button>
-        <button onclick="sendWhatsApp()">📲 WhatsApp</button>
-        <button onclick="sendEmail()">📧 Email</button>
-    </div>
+    <button class="copy-btn" onclick="copyAllData()">نسخ جميع البيانات</button>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Index - الفهرس</th>
-                <th>Goal - الهدف</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>اجيب الماتريكولا - Get the matricula</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>اعمل الجونطا - Do the junta</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>اعمل النيف - Do the NIF</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>افتح حساب بنكي - Open a bank account</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>اشتري خط تليفون - Buy a SIM card</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>اشتري سيارة - Buy a car</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>اقابل مونيا - Meet with Mounia</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>اقابل خال مونيا - Meet Mounia's uncle</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>اسافر ٤ دول - Travel to 4 countries (Germany, ...)</td>
-            </tr>
-        </tbody>
-    </table>
+<div id="toast" class="toast">تم نسخ جميع البيانات بنجاح!</div>
 
-    <script src="scripts.js"></script>
+<script>
+    // عداد الوقت والتاريخ المباشر
+    function updateClock() {
+        const now = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit' 
+        };
+        document.getElementById('liveClock').innerText = now.toLocaleDateString('ar-EG', options);
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // وظيفة نسخ جميع البيانات
+    function copyAllData() {
+        const textToCopy = `اسم صاحب الحساب: SAMER GUDA NASR ALSAADNI
+رقم الحساب: 478262110001
+العملة: EUR
+NIB: 018900047826211000144
+IBAN: PT50018900047826211000144
+رمز BIC / SWIFT: BAPAPTPLXXX
+اسم البنك: Banco Atlântico Europa, S.A.
+تاريخ الإصدار: Lisboa, 26 de setembro de 2026`;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            showToast();
+        }).catch(err => {
+            console.error('فشل النسخ: ', err);
+        });
+    }
+
+    // إظهار إشعار النسخ
+    function showToast() {
+        const toast = document.getElementById("toast");
+        toast.className = "toast show";
+        setTimeout(() => { 
+            toast.className = toast.className.replace("show", ""); 
+        }, 2500);
+    }
+</script>
+
 </body>
 </html>
